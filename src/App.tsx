@@ -35,22 +35,25 @@ function App() {
 
   const addNomination=(id:string)=>{
     if(nomination!==undefined){
-      let arr=nomination;
       fetchedData?.map(data=>{
         if(data.imdbID===id){
+          let arr=[...nomination];
           arr.push(data)
+          setNomination(arr);
         }
       })
-      console.log(arr)
-      setNomination(arr);
     }else{
       fetchedData?.map(data=>{
         if(data.imdbID===id){
-          let arr=[data]
-          console.log(arr)
-          setNomination(arr)
+          setNomination([data])
         }
       })
+    }
+
+    const button = document.getElementById(id)
+    if(button!==null)
+    {
+        (button as HTMLButtonElement).disabled = true;
     }
 
   }
@@ -62,8 +65,14 @@ function App() {
       console.log(arr);
       setNomination(arr);
     }
-  }
 
+    const button = document.getElementById(id)
+    if(button!==null)
+    {
+        (button as HTMLButtonElement).disabled = false;
+    }
+
+  }
 
 
   return (

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import Nomination from './Nomination'
 import { SearchType } from './Interfaces'
 import Result from './Result'
@@ -9,22 +9,22 @@ interface Props {
 }
 
 export default function Nominations(props: Props): ReactElement {
-    const nominations=props.nominations
+    const remove=(id:string)=>{
+        props.remove(id)
+    }
     return (
         <div>
-            {
-                nominations&&
-                nominations.map(nomination=>(
-                    <li key={nomination.imdbID}>
-                        <Result search={nomination}/>
-                        <button onClick={()=>(
-                            props.remove(nomination.imdbID)
-                        )}>
-                        Nominate
-                        </button>
-                    </li>
-                ))
-            }
+        {
+            props.nominations&&
+            props.nominations.map(nomination=>(
+                <li key={nomination.imdbID}>
+                    <Nomination nomination={nomination}/>
+                    <button onClick={()=>(remove(nomination.imdbID))}>
+                    remove
+                    </button>
+                </li>
+            ))
+        }
         </div>
     )
 }

@@ -1,6 +1,7 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import Result from './Result'
 import { SearchType } from './Interfaces'
+import Search from './Search'
 
 interface Props {
     searches:SearchType[]
@@ -9,23 +10,25 @@ interface Props {
 
 
 export default function Results(props:Props): ReactElement {
-    const searches=props.searches
-    console.log(searches)
+    const add=(id:string)=>{
+        props.add(id)
+        
+    }
     return (
         <div>
-            {
-                searches&&
-                searches.map(search=>(
-                    <li key={search.imdbID}>
-                        <Result search={search}/>
-                        <button onClick={()=>(
-                            props.add(search.imdbID)
-                        )}>
+        {
+            props.searches&&
+            props.searches.map(search=>(
+                <li key={search.imdbID}>
+                    <Result search={search}/>
+                    <button 
+                        id={search.imdbID} 
+                        onClick={()=>(add(search.imdbID))}>
                         Nominate
-                        </button>
-                    </li>
-                ))
-            }
+                    </button>
+                </li>
+            ))
+        }
         </div>
     )
 }

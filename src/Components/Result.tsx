@@ -6,11 +6,9 @@ interface Props {
 }
 
 export default function Result(props: Props): ReactElement {
-    console.log(props.search)
-    const search=props.search
     return (
         <div>
-            {search.Title}({search.Year})
+            {props.search.Title}({props.search.Year})
         </div>
     )
 }
