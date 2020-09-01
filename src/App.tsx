@@ -1,24 +1,101 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import axios from 'axios'
+import Results from './Components/Results';
+import Search from './Components/Search';
+import { SearchType,ResponseType } from './Components/Interfaces';
+import Nominations from './Components/Nominations';
+
+
+const API = 'http://www.omdbapi.com/?apikey=72a5618d&s='
+
 
 function App() {
+  const [tag,setTag]=useState("");
+  const [fetchedData,setFetchedData]=useState<SearchType[]>();
+  const [nomination,setNomination]=useState<SearchType[]>();
+  
+
+  const handleSearch=(event: React.ChangeEvent<HTMLInputElement>)=>{
+      setTag(event.target.value)
+      console.log(event.target.value);
+      axios.get<ResponseType>(API+event.target.value)
+        .then(result =>{
+            if(result.data.Response==="True")
+            {
+              console.log(result.data)
+              setFetchedData(result.data.Search)
+            } else{
+              setFetchedData(undefined)
+            }
+            
+        })
+        .catch(error => console.log(error));
+  }
+
+  const addNomination=(id:string)=>{
+    if(nomination!==undefined){
+      let arr=nomination;
+      fetchedData?.map(data=>{
+        if(data.imdbID===id){
+          arr.push(data)
+        }
+      })
+      console.log(arr)
+      setNomination(arr);
+    }else{
+      fetchedData?.map(data=>{
+        if(data.imdbID===id){
+          let arr=[data]
+          console.log(arr)
+          setNomination(arr)
+        }
+      })
+    }
+
+  }
+  
+  const removeNomination=(id:string)=>{
+    if(nomination!==undefined)
+    {
+      let arr=nomination.filter(data=>data.imdbID!==id)
+      console.log(arr);
+      setNomination(arr);
+    }
+  }
+
+
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        The Shoppies
       </header>
+      <Search handleSearch={handleSearch}/>
+      {
+        tag===""?
+        null:
+        <div>
+          <h2>Research for "{tag}"</h2>
+        </div>
+      }
+      {
+        fetchedData===undefined?
+        null:
+        <Results 
+          searches={fetchedData} 
+          add={addNomination}
+        />
+      }
+      {
+        nomination===undefined?
+        null:
+        <Nominations 
+          nominations={nomination} 
+          remove={removeNomination}
+        />
+      }
+
     </div>
   );
 }
