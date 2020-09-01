@@ -9,7 +9,9 @@ interface Props {
 export default function Result(props: Props): ReactElement {
     return (
         <div>
-            {props.search.Title}({props.search.Year})
+            <div style={{display:"inline-block", margin:"10px"}}>
+                {props.search.Title}({props.search.Year})
+            </div>
             <button 
                 id={props.search.imdbID} 
                 onClick={()=>(props.add(props.search.imdbID))}>

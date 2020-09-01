@@ -63,7 +63,12 @@ function App() {
     {
       let arr=nomination.filter(data=>data.imdbID!==id)
       console.log(arr);
-      setNomination(arr);
+      if(arr.length==0)
+      {
+        setNomination(undefined)
+      }else{
+        setNomination(arr);
+      }
     }
 
     const button = document.getElementById(id)
@@ -81,19 +86,14 @@ function App() {
         The Shoppies
       </header>
       <Search handleSearch={handleSearch}/>
-      {
-        tag===""?
-        null:
-        <div>
-          <h2>Research for "{tag}"</h2>
-        </div>
-      }
+
       {
         fetchedData===undefined?
         null:
         <Results 
           searches={fetchedData} 
           add={addNomination}
+          tag={tag}
         />
       }
       {

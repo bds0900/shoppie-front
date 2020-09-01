@@ -13,14 +13,15 @@ export default function Nominations(props: Props): ReactElement {
         props.remove(id)
     }
     return (
-        <div>
+        <div className="flex-container">
+        {props.nominations!==null?<h2>Nomination</h2>:null}
         {
             props.nominations&&
             props.nominations.map(nomination=>(
-                <li key={nomination.imdbID}>
+                <div className="flex-item">
                     <Nomination nomination={nomination} remove={remove}/>
                     
-                </li>
+                </div>
             ))
         }
         </div>

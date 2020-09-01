@@ -6,6 +6,7 @@ import Search from './Search'
 interface Props {
     searches:SearchType[]
     add:any
+    tag:string
 }
 
 
@@ -15,16 +16,15 @@ export default function Results(props:Props): ReactElement {
         
     }
     return (
-        <div >
+        <div className="flex-container">
+        <h2>Results for "{props.tag}"</h2>
         {
+            
             props.searches&&
             props.searches.map(search=>(
-                <li key={search.imdbID}>
-
-                
-                <Result search={search} add={add}/>
-
-                </li>
+                <div className="flex-item">
+                    <Result search={search} add={add}/>
+                </div>
             ))
         }
         </div>
