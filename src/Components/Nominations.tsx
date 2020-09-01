@@ -18,10 +18,8 @@ export default function Nominations(props: Props): ReactElement {
             props.nominations&&
             props.nominations.map(nomination=>(
                 <li key={nomination.imdbID}>
-                    <Nomination nomination={nomination}/>
-                    <button onClick={()=>(remove(nomination.imdbID))}>
-                    remove
-                    </button>
+                    <Nomination nomination={nomination} remove={remove}/>
+                    
                 </li>
             ))
         }

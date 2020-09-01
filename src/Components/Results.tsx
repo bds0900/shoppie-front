@@ -15,17 +15,15 @@ export default function Results(props:Props): ReactElement {
         
     }
     return (
-        <div>
+        <div >
         {
             props.searches&&
             props.searches.map(search=>(
                 <li key={search.imdbID}>
-                    <Result search={search}/>
-                    <button 
-                        id={search.imdbID} 
-                        onClick={()=>(add(search.imdbID))}>
-                        Nominate
-                    </button>
+
+                
+                <Result search={search} add={add}/>
+
                 </li>
             ))
         }
