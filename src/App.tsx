@@ -17,6 +17,29 @@ function App() {
   const [nomination,setNomination]=useState<SearchType[]>();
   const [banner,setBanner]=useState<boolean>(false);
 
+  useEffect(()=>{
+    updateButton()
+  },[nomination,fetchedData])
+
+  const updateButton=()=>{
+    fetchedData?.map(item=>{
+      const button = document.getElementById(item.imdbID)
+      if(button!==null)
+      {
+          (button as HTMLButtonElement).disabled = false;
+      }
+
+    })
+    nomination?.map(item=>{
+      const button = document.getElementById(item.imdbID)
+      if(button!==null)
+      {
+          (button as HTMLButtonElement).disabled = true;
+      }
+
+    })
+  }
+
   const handleSearch=(event: React.ChangeEvent<HTMLInputElement>)=>{
       setTag(event.target.value)
       console.log(event.target.value);
@@ -50,16 +73,6 @@ function App() {
         }
       })
     }
-
-    const button = document.getElementById(id)
-    if(button!==null)
-    {
-        (button as HTMLButtonElement).disabled = true;
-    }
-    if(nomination?.length===4){
-      addBanner()
-    }
-
   }
   
   const removeNomination=(id:string)=>{
@@ -73,12 +86,6 @@ function App() {
       }else{
         setNomination(arr);
       }
-    }
-
-    const button = document.getElementById(id)
-    if(button!==null)
-    {
-        (button as HTMLButtonElement).disabled = false;
     }
 
   }
