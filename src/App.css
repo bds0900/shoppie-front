@@ -57,3 +57,29 @@
   background: #4584b1;
   float: left;
 }
+
+.banner{
+  position: fixed;
+  top:0;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  max-width: 400px;
+  padding: 6px;
+  background:#60B99A;
+  color: #fff;
+  font-family: sans-serif;
+  text-align: center;
+  border: 1px solid #aaaaaa;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+  visibility: hidden;
+  opacity: 0;
+}
+.banner--hidden {
+  top: 20px;
+  opacity: 1;
+  visibility: visible;
+}

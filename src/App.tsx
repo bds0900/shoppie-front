@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios'
 import Results from './Components/Results';
 import Search from './Components/Search';
 import { SearchType,ResponseType } from './Components/Interfaces';
 import Nominations from './Components/Nominations';
+import ReactDOM from 'react-dom';
 
 
 const API = 'http://www.omdbapi.com/?apikey=72a5618d&s='
@@ -14,7 +15,7 @@ function App() {
   const [tag,setTag]=useState("");
   const [fetchedData,setFetchedData]=useState<SearchType[]>();
   const [nomination,setNomination]=useState<SearchType[]>();
-  
+  const [banner,setBanner]=useState<boolean>(false);
 
   const handleSearch=(event: React.ChangeEvent<HTMLInputElement>)=>{
       setTag(event.target.value)
@@ -55,6 +56,9 @@ function App() {
     {
         (button as HTMLButtonElement).disabled = true;
     }
+    if(nomination?.length===4){
+      addBanner()
+    }
 
   }
   
@@ -77,6 +81,13 @@ function App() {
         (button as HTMLButtonElement).disabled = false;
     }
 
+  }
+  
+  const addBanner=()=>{
+    setBanner(true)
+    setTimeout(() => {
+      setBanner(false)
+    }, 3000);
   }
 
 
@@ -105,6 +116,10 @@ function App() {
         />
       }
 
+      
+        <div className={`banner ${banner?"banner--hidden":""}`}>
+          You got 5 nominations
+        </div>
     </div>
   );
 }
