@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement } from 'react'
 import Nomination from './Nomination'
 import { SearchType } from './Interfaces'
 import Result from './Result'

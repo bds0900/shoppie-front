@@ -5,7 +5,7 @@ import Results from './Components/Results';
 import Search from './Components/Search';
 import { SearchType,ResponseType } from './Components/Interfaces';
 import Nominations from './Components/Nominations';
-import ReactDOM from 'react-dom';
+import { useCookies } from "react-cookie";
 
 
 const API = 'http://www.omdbapi.com/?apikey=72a5618d&s='
@@ -16,10 +16,22 @@ function App() {
   const [fetchedData,setFetchedData]=useState<SearchType[]>();
   const [nomination,setNomination]=useState<SearchType[]>();
   const [banner,setBanner]=useState<boolean>(false);
-
+  const [cookies, setCookie] = useCookies(["user"]);
   useEffect(()=>{
     updateButton()
+    handleCookie()
+    if(nomination?.length===5){
+      addBanner()
+    }
   },[nomination,fetchedData])
+
+  useEffect(()=>{
+    if(cookies.user!=="undefined"){
+      setNomination(cookies.user)
+    }
+
+  },[])
+
 
   const updateButton=()=>{
     fetchedData?.map(item=>{
@@ -38,6 +50,13 @@ function App() {
       }
 
     })
+  }
+  
+  const handleCookie=()=>{
+
+    setCookie("user", nomination, {
+      path: "/"
+    });
   }
 
   const handleSearch=(event: React.ChangeEvent<HTMLInputElement>)=>{
@@ -80,7 +99,7 @@ function App() {
     {
       let arr=nomination.filter(data=>data.imdbID!==id)
       console.log(arr);
-      if(arr.length==0)
+      if(arr.length===0)
       {
         setNomination(undefined)
       }else{
