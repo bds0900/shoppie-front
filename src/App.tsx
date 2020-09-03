@@ -6,6 +6,7 @@ import Search from './Components/Search';
 import { SearchType,ResponseType } from './Components/Interfaces';
 import Nominations from './Components/Nominations';
 import { useCookies } from "react-cookie";
+import Share from './Components/Share';
 
 
 const API = 'http://www.omdbapi.com/?apikey=72a5618d&s='
@@ -141,11 +142,16 @@ function App() {
           remove={removeNomination}
         />
       }
-
+      {
+        fetchedData===undefined?
+        null:
+        <Share/>
+      }
       
-        <div className={`banner ${banner?"banner--hidden":""}`}>
-          You got 5 nominations
-        </div>
+      
+      <div className={`banner ${banner?"banner--hidden":""}`}>
+        You got 5 nominations
+      </div>
     </div>
   );
 }
