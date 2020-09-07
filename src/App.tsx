@@ -9,7 +9,7 @@ import { useCookies } from "react-cookie";
 import Share from './Components/Share';
 
 
-const API = 'http://www.omdbapi.com/?apikey=72a5618d&s='
+const API = 'https://www.omdbapi.com/?apikey=72a5618d&s='
 
 
 function App() {
@@ -62,12 +62,10 @@ function App() {
 
   const handleSearch=(event: React.ChangeEvent<HTMLInputElement>)=>{
       setTag(event.target.value)
-      console.log(event.target.value);
       axios.get<ResponseType>(API+event.target.value)
         .then(result =>{
             if(result.data.Response==="True")
             {
-              console.log(result.data)
               setFetchedData(result.data.Search)
             } else{
               setFetchedData(undefined)
@@ -99,7 +97,7 @@ function App() {
     if(nomination!==undefined)
     {
       let arr=nomination.filter(data=>data.imdbID!==id)
-      console.log(arr);
+
       if(arr.length===0)
       {
         setNomination(undefined)
